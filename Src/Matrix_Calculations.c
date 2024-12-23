@@ -198,22 +198,15 @@ matrix* Mnew(int m, int n)
 	return a;
 }
 
+//************************************************************************************************
+//***************************申请空间并提前计算
+//**@auto 李清波
+//**@fun   
+//************************************************************************************************
 void Minit(matrix* a)
 {
 	a->inv = Minv(a);
-	a->inv->inv = a;
 	a->T = Mtrans(a);
-	a->T->T = a;
-	a->inv->T = Mtrans(a->inv);
-	a->T->inv = a->inv->T;
-	a->inv->T->T = a->inv;
-	a->T->inv->inv = a->T;
-	a->inv->T->inv = a->T;
-	a->T->inv->T = a->inv;
-	a->det = hhlx(a->A, a->m);
-	a->inv->det = 1 / a->det;
-	a->T->det = a->det;
-	a->inv->T->det = a->inv->det;
 }
 
 void Mprintf(matrix* a)
@@ -354,7 +347,6 @@ void mfree(matrix* a)
 
 void Mfree(matrix* a)
 {
-	mfree(a->inv->T);
 	mfree(a->inv);
 	mfree(a->T);
 	mfree(a);
