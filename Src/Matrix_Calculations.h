@@ -4,14 +4,28 @@
 
 typedef struct Matrix matrix;
 
-struct Matrix{
-	double** A;
-	int m;
-	int n;
-	double det;
-	matrix* inv;
-	matrix* T;
-};
+
+#define MICO 1
+#if MICO
+	struct Matrix
+	{
+		double** A;
+		int m;
+		int n;
+		double det;
+		double** inv;
+		double** T;
+	};
+#else 
+	struct Matrix{
+		double** A;
+		int m;
+		int n;
+		double det;
+		matrix* inv;
+		matrix* T;
+	};
+#endif
 
 
 /*行列式*/
