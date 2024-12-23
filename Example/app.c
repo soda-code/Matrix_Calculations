@@ -1,50 +1,51 @@
-#include "cmatrix.h"
+#include "Matrix_Calculations.h"
+#include "stdio.h"
+#include "stdint.h"
+#define Rows  3
+#define Cols  3
 
+double array[3][4] =
+{
+	{1,2,6.5},
+	{3,4,0  },
+	{0,8,3.6}
+};
 int main()
 {
+	uint16_t i = 0;
+    uint16_t j = 0;
 	matrix* d;
-	d = Mnew(3, 3);
-	d->A[0][0] = 1;
-	d->A[0][1] = 2;
-	d->A[1][0] = 3;
-	d->A[1][1] = 4;
-	d->A[0][2] = 6.5;
-	d->A[1][2] = 0;
-	d->A[2][0] = 0;
-	d->A[2][1] = 8;
-	d->A[2][2] = 3.6;
-	
+	matrix* d1;
+	matrix* d2;
+	d  = Mnew(Rows, Cols);
+	d1 = Mnew(Rows, Cols);
+	d2 = Mnew(Rows, Cols);
+
+	// 将二维数组的值赋给双重指针
+	for (i = 0; i < Rows; i++) {
+		for (j = 0; j < Cols; j++) {
+			d->A[i][j] = array[i][j];
+		}
+	}
+	for (i = 0; i < Rows; i++) {
+		for (j = 0; j < Cols; j++) {
+			d1->A[i][j] = array[i][j];
+		}
+	}
 	Minit(d);
+	Minit(d1);
 	printf("输入的矩阵为：\n");
 	Mprintf(d);
 	printf("矩阵逆为：\n");
 	Mprintf(d->inv);
 	printf("矩阵转置为：\n");
 	Mprintf(d->T);
-
-	printf("矩阵转置的逆：\n");
-	Mprintf(d->T->inv);
-	printf("矩阵逆的转置：\n");
-	Mprintf(d->inv->T);
-	Mprintf("矩阵转置的逆的转置：\n");
-	Mprintf(d->T->inv->T);
-	printf("矩阵转置的逆的转置的逆的转置：\n");
-	Mprintf(d->T->inv->T->inv->T);
-	printf("矩阵逆的逆：\n");
-	Mprintf(d->inv->inv);
-	printf("转置的转置的逆的逆：\n");
-	Mprintf(d->T->T->inv->inv);
-	printf("逆的逆的转置的转置：\n");
-	Mprintf(d->inv->inv->T->T);
-	printf("矩阵的行列式：%f\n", d->det);
-	printf("矩阵的逆的行列式：%f\n", d->inv->det);
-	printf("矩阵的逆的转置的行列式：%f\n", d->inv->T->det);
-	printf("矩阵的转置的逆的转置的逆的转置的逆的逆的行列式：%f\n", d->T->inv->T->inv->T->inv->inv->det);
-	printf("矩阵的转置的逆的行列式：%f\n", d->T->inv->det);
-	printf("矩阵的逆的转置的逆的行列式：%f\n", d->inv->T->inv->det);
-	printf("矩阵的转置的逆的逆的行列式：%f\n", d->T->inv->inv->det);
+	printf("矩阵的和为：\n");
+	d2=Mplus(d, d1);
+	Mprintf(d2);
 
 	Mfree(d);
-
+	Mfree(d1);
+	Mfree(d2);
 	return 0;
 }
